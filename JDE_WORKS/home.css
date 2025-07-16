@@ -1,0 +1,161 @@
+:root {
+  --color-white: #FFFFFF;
+  --color-brown: #F3EAD9;
+  --color-gold: #D6A347;
+  --color-grey: #a6a6a6;
+  --color-blue: #012B43;
+  --color-red: #c7232c;
+}
+
+@font-face {
+  font-family: 'out';
+  src: url('Assets/font/outfit.ttf') format('truetype');
+}
+
+/* Body Styling */
+body {
+  background-color: var(--color-brown);
+  font-family: out;
+  overflow-x: hidden;
+  width: 100%;
+  }
+
+.navbar{
+  color: var(--color-brown);
+  padding: 10px;
+}
+
+/* Navbar Links */
+.navbar-nav .nav-link {
+  color: var(--color-blue) ;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 12px;
+  transition: color 0.3s ease-in-out;
+  text-align: center;
+}
+
+
+.logo{
+  max-height: 50px;
+  width: auto;
+  justify-content: center;
+}
+
+.navbar-brand{
+  padding-top: 0;
+  padding-bottom: 0;
+  justify-content: center;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--color-gold) !important;
+}
+
+.login, .signup {
+  display: inline-block;
+  width: 110px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 60px;
+  transition: all 0.3s ease;
+}
+
+/* Login Button */
+.login {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+.login:hover {
+  background-color: var(--color-white);
+  color: var(--color-blue);
+}
+
+/* Sign-up Button */
+.signup {
+  background-color: var(--color-gold);
+  color: var(--color-blue);
+}
+
+.signup:hover {
+  background-color: var(--color-white);
+  color: var(--color-blue);
+}
+
+/* Adjust spacing between buttons */
+.button-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Home layout */
+.hero-image {
+  background: linear-gradient(rgba(4, 12, 32, 0.7), rgba(4, 12, 32, 0.5)),
+              url(./Assets/img/bgjd.png);
+  height: 100vh; /* Full height of the screen */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5vw;
+}
+
+/* Keep Content Left-Aligned */
+.hero-content {
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  width: 40%; /* Keep a fixed width */
+  max-width: 600px; /* Prevent stretching */
+  text-align: left;
+}
+
+
+.Products {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px; 
+  margin: auto;
+  gap: 40px; 
+  min-height: 650px;
+  
+}
+
+
+.Our-Story {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px; 
+  max-width: 1200px;
+  margin: auto;
+  gap: 40px; 
+  min-height: 650px;
+  background-color: var(--color-gold);
+}
+
+
+
+.Contact {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px; 
+  margin: auto;
+  gap: 40px; 
+  min-height: 650px;
+  
+}
+
+footer{
+  background-color: var(--color-blue);
+  padding: 10px;
+}
+footer p{
+  color: var(--color-white);
+}
