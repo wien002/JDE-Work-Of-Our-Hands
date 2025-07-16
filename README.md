@@ -1,0 +1,2 @@
+# JDE-Works-Of-Our-Hands
+Group BGER IT Solutions presents “A WEB-BASED TAILORING ORDERING SYSTEM FOR JDE WORK OF OUR HANDS” 
