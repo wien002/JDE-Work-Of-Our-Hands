@@ -1,0 +1,159 @@
+/* Base body styling and global font */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Back button appearance */
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+    font-weight: 600;
+}
+
+/* Hover state for back button */
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Card container that wraps the settings form */
+.settings-card {
+    border: 1px solid #d6b25e;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(214, 178, 94, 0.10), 0 1.5px 6px rgba(5, 43, 71, 0.07);
+}
+
+/* Title styling inside the settings card */
+.settings-card .card-title {
+    color: #052b47;
+    font-weight: 700;
+}
+
+/* Labels for each field */
+.settings-form .form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Shared padding/radius for inputs and read-only values */
+.settings-form .form-control,
+.settings-form .form-control-plaintext {
+  padding: 0.8rem 1.1rem;
+  border-radius: 12px;
+}
+
+/* Editable field borders */
+.settings-form .form-control {
+    border-color: #e0e0e0;
+}
+
+/* Focus feedback for editable fields */
+.settings-form .form-control:focus {
+    border-color: #d6b25e;
+    box-shadow: 0 0 0 0.2rem rgba(214, 178, 94, 0.25);
+}
+
+/* Read-only (old credential) styling */
+.settings-form .form-control-plaintext {
+  background-color: rgba(214, 178, 94, 0.08);
+  font-weight: 500;
+  color: #555;
+  border: 1px solid transparent;
+  margin-bottom: 0.5rem;
+}
+
+/* Wrapper for each stacked field */
+.settings-form .settings-field {
+  margin-bottom: 2rem;
+}
+
+/* Padding inside column wrappers */
+.settings-form .settings-row > div,
+.settings-form .settings-row > label {
+  padding-left: 0.85rem;
+  padding-right: 0.85rem;
+}
+
+/* Primary action button */
+.settings-form .btn-primary {
+  background-color: #d6b25e;
+  border-color: #d6b25e;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-weight: 600;
+}
+
+/* Hover state for primary action button */
+.settings-form .btn-primary:hover {
+    background-color: #c19b4a;
+    border-color: #c19b4a;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    /* Container padding on small screens */
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Card adjustments for small screens */
+    .settings-card {
+        border-radius: 15px;
+    }
+
+    /* Reduce padding on the card body */
+    .settings-card .card-body {
+        padding: 1.25rem;
+    }
+
+    /* Left-align labels on small screens */
+    .settings-form .form-label {
+        text-align: left !important;
+        padding-top: 0.375rem;
+    }
+
+    /* Adjust typography for inputs on small screens */
+    .settings-form .form-control,
+    .settings-form .form-control-plaintext {
+        font-size: 0.9rem;
+    }
+
+    /* Smaller button on mobile */
+    .settings-form .btn-primary {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+}
+
+/* Desktop enhancements */
+@media (min-width: 769px) {
+    /* Max width for the container */
+    .container {
+        max-width: 1200px;
+    }
+
+    /* Rounded corners for cards on desktop */
+    .settings-card {
+        border-radius: 22px;
+    }
+
+    /* Card padding on desktop */
+    .settings-card .card-body {
+        padding: 3rem;
+    }
+
+    /* Larger text on desktop */
+    .settings-form .form-control,
+    .settings-form .form-control-plaintext {
+        font-size: 1.15rem;
+    }
+
+    /* Larger button on desktop */
+    .settings-form .btn-primary {
+        font-size: 1.15rem;
+        padding: 14px 28px;
+    }
+}

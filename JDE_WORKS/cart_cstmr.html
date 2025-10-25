@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>My Cart</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="transaction_history_cstmr.css" />
+    <link rel="stylesheet" href="cart_cstmr.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="customer-dashbaord.html">
+                <img src="assets/img/logojd.png" alt="JDE Works of Our Hands Logo" class="logo" loading="lazy">
+                <span class="fw-semibold text-primary">Customer Portal</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#customerNav" aria-controls="customerNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="customerNav">
+                <ul class="navbar-nav align-items-lg-center gap-lg-3">
+                    <li class="nav-item"><a class="nav-link" href="set_appntmnt_cstmr.html">Set Appointment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="transaction_history_cstmr.html">Transactions</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-semibold" aria-current="page" href="cart_cstmr.html">Cart</a></li>
+                    <li class="nav-item dropdown ms-lg-3">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="customerMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="customerMenu">
+                            <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="cart-container">
+        <section class="cart-items-panel">
+            <a href="customer-dashbaord.html" class="back-link d-inline-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+            <header class="panel-header">
+                <h1>Shopping Cart</h1>
+                <span class="cart-count">3 items</span>
+            </header>
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="cart-checkbox-col">Select</th>
+                        <th scope="col" class="cart-product-col">Product Details</th>
+                        <th scope="col" class="cart-custom-col">Size / Customization</th>
+                        <th scope="col" class="cart-price-col">Unit Price</th>
+                        <th scope="col" class="cart-qty-col">Quantity</th>
+                        <th scope="col" class="cart-subtotal-col">Item Subtotal</th>
+                        <th scope="col" class="cart-action-col text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="cart-row">
+                        <td class="cart-checkbox-col">
+                            <input class="form-check-input" type="checkbox" value="">
+                        </td>
+                        <td class="cart-product-cell" data-label="Product Details">
+                            <div class="cart-product-thumb" role="presentation">
+                                <img src="https://via.placeholder.com/160x160?text=Barong" alt="Classic Piña Barong">
+                            </div>
+                            <div class="cart-product-copy">
+                                <h3 class="cart-product-name">Classic Piña Barong</h3>
+                                <ul class="cart-product-meta">
+                                    <li>Cart ID: C-101</li>
+                                    <li>Product ID: 5001</li>
+                                    <li>Category: Formal Wear</li>
+                                    <li>Stocks: 12 pcs</li>
+                                    <li>Description: Hand-embroidered, full-open design.</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="cart-custom-cell" data-label="Size / Customization">
+                            <ul class="cart-custom-meta">
+                                <li>Standard Size: Medium</li>
+                                <li>From <code>tbl_product.size</code></li>
+                                <li>No custom measurements</li>
+                            </ul>
+                        </td>
+                        <td class="cart-price-cell" data-label="Unit Price">
+                            <span class="cart-unit-price">₱4,200.00</span>
+                        </td>
+                        <td class="cart-qty-cell" data-label="Quantity">
+                            <input type="number" min="1" class="cart-item-qty" value="1">
+                        </td>
+                        <td class="cart-subtotal-cell" data-label="Item Subtotal">
+                            <span class="cart-line-total">₱4,200.00</span>
+                        </td>
+                        <td class="cart-action-col text-end" data-label="Action">
+                            <button type="button" class="cart-item-remove btn btn-link p-0">Remove</button>
+                        </td>
+                    </tr>
+                    <tr class="cart-row">
+                        <td class="cart-checkbox-col">
+                            <input class="form-check-input" type="checkbox" value="">
+                        </td>
+                        <td class="cart-product-cell" data-label="Product Details">
+                            <div class="cart-product-thumb" role="presentation">
+                                <img src="https://via.placeholder.com/160x160?text=Suit" alt="Modern Charcoal Suit">
+                            </div>
+                            <div class="cart-product-copy">
+                                <h3 class="cart-product-name">Modern Charcoal Suit</h3>
+                                <ul class="cart-product-meta">
+                                    <li>Cart ID: C-214</li>
+                                    <li>Product ID: 5304</li>
+                                    <li>Category: Menswear</li>
+                                    <li>Stocks: 5 pcs</li>
+                                    <li>Description: Two-piece, slim fit, wool blend.</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="cart-custom-cell" data-label="Size / Customization">
+                            <ul class="cart-custom-meta">
+                                <li>Customize ID: 88012</li>
+                                <li>Clothing Type: Suit</li>
+                                <li>Shoulder: 18.5"</li>
+                                <li>Sleeve Length: 25"</li>
+                                <li>Chest: 42"</li>
+                            </ul>
+                        </td>
+                        <td class="cart-price-cell" data-label="Unit Price">
+                            <span class="cart-unit-price">₱8,500.00</span>
+                        </td>
+                        <td class="cart-qty-cell" data-label="Quantity">
+                            <input type="number" min="1" class="cart-item-qty" value="1">
+                        </td>
+                        <td class="cart-subtotal-cell" data-label="Item Subtotal">
+                            <span class="cart-line-total">₱8,500.00</span>
+                        </td>
+                        <td class="cart-action-col text-end" data-label="Action">
+                            <button type="button" class="cart-item-remove btn btn-link p-0">Remove</button>
+                        </td>
+                    </tr>
+                    <tr class="cart-row">
+                        <td class="cart-checkbox-col">
+                            <input class="form-check-input" type="checkbox" value="">
+                        </td>
+                        <td class="cart-product-cell" data-label="Product Details">
+                            <div class="cart-product-thumb" role="presentation">
+                                <img src="https://via.placeholder.com/160x160?text=Gown" alt="Elegant Evening Gown">
+                            </div>
+                            <div class="cart-product-copy">
+                                <h3 class="cart-product-name">Elegant Evening Gown</h3>
+                                <ul class="cart-product-meta">
+                                    <li>Cart ID: C-337</li>
+                                    <li>Product ID: 5408</li>
+                                    <li>Category: Womenswear</li>
+                                    <li>Stocks: 3 pcs</li>
+                                    <li>Description: Floor-length, A-line, silk charmeuse.</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="cart-custom-cell" data-label="Size / Customization">
+                            <ul class="cart-custom-meta">
+                                <li>Standard Size: Small</li>
+                                <li>From <code>tbl_product.size</code></li>
+                                <li>No custom measurements</li>
+                            </ul>
+                        </td>
+                        <td class="cart-price-cell" data-label="Unit Price">
+                            <span class="cart-unit-price">₱7,800.00</span>
+                        </td>
+                        <td class="cart-qty-cell" data-label="Quantity">
+                            <input type="number" min="1" class="cart-item-qty" value="1">
+                        </td>
+                        <td class="cart-subtotal-cell" data-label="Item Subtotal">
+                            <span class="cart-line-total">₱7,800.00</span>
+                        </td>
+                        <td class="cart-action-col text-end" data-label="Action">
+                            <button type="button" class="cart-item-remove btn btn-link p-0">Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <aside class="cart-summary-panel">
+            <h2>Order Summary</h2>
+            <dl class="summary-line">
+                <dt>Subtotal</dt>
+                <dd>₱20,500.00</dd>
+            </dl>
+            <dl class="summary-line summary-total">
+                <dt>Total</dt>
+                <dd>₱20,500.00</dd>
+            </dl>
+            <button type="button" class="checkout-btn">Proceed to Checkout</button>
+            <p class="cart-feedback" hidden></p>
+        </aside>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

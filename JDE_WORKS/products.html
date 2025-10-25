@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="admin_dashb.css">
+  <title>Products - Admin</title>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <img src="assets/img/logo.png" alt="Logo">
+    </div>
+    <ul>
+      <li><a href="admin_dashboard.html">Dashboard</a></li>
+      <li class="active"><a href="products.html">Products</a></li>
+      <li><a href="orders.html">Orders</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="users.html">Users</a></li>
+      <li><a href="payment_admin.html">Payments</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="topbar">
+      <a href="index.php" class="logout-btn">Logout</a>
+      <div class="divider"></div>
+      <div class="profile">
+        <span class="admin-text">Admin</span>
+      </div>
+    </div>
+
+    <h2>Products</h2>
+
+    <div class="dashboard-boxes">
+      <!-- Products Box -->
+      <div class="box">
+        <div class="box-header">
+          <h3>Product List</h3>
+
+          <!-- Search bar (reusing users.html CSS) -->
+          <div class="search-section">
+            <input type="text" placeholder="Search products..." class="search-input">
+            <button class="btn search"><i class="bi bi-search"></i></button>
+          </div>
+
+          <button class="btn add">+ Add Product</button>
+        </div>
+
+        <table>
+          <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Size</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+          <tr>
+            <td>01</td>
+            <td>Uniform Pants</td>
+            <td>Clothing</td>
+            <td>Large</td>
+            <td>27</td>
+            <td>₱750</td>
+            <td>
+              <button class="btn viewProduct">View</button>
+              <button class="btn edit">Edit</button>
+              <button class="btn delete">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>02</td>
+            <td>White Polo</td>
+            <td>Clothing</td>
+            <td>Large</td>
+            <td>8</td>
+            <td>₱750</td>
+            <td>
+              <button class="btn viewProduct">View</button>
+              <button class="btn edit">Edit</button>
+              <button class="btn delete">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>03</td>
+            <td>White Polo</td>
+            <td>Clothing</td>
+            <td>Medium</td>
+            <td>21</td>
+            <td>₱650</td>
+            <td>
+              <button class="btn viewProduct">View</button>
+              <button class="btn edit">Edit</button>
+              <button class="btn delete">Delete</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

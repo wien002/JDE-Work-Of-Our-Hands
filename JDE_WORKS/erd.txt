@@ -1,0 +1,155 @@
+-- =========================
+-- Table: tbl_usertype
+-- =========================
+CREATE TABLE tbl_usertype (
+    userTypeID INT PRIMARY KEY,
+    userTypeName VARCHAR(20),
+    description VARCHAR(50),
+    updatedBy VARCHAR(50)
+);
+
+-- =========================
+-- Table: tbl_user
+-- =========================
+CREATE TABLE tbl_user (
+    userID INT PRIMARY KEY,
+    userTypeID INT,
+    userName VARCHAR(40),
+    password VARCHAR(50),
+    firstName VARCHAR(40),
+    middleName VARCHAR(40),
+    lastName VARCHAR(40),
+    birthday DATE,
+    gender VARCHAR(40),
+    address VARCHAR(100),
+    email VARCHAR(40),
+    phoneNumber VARCHAR(11),
+    lastlogin DATETIME,
+    createdBy VARCHAR(50),
+    updatedBy VARCHAR(50),
+    FOREIGN KEY (userTypeID) REFERENCES tbl_usertype(userTypeID)
+);
+
+-- =========================
+-- Table: tbl_productcategory
+-- =========================
+CREATE TABLE tbl_productcategory (
+    categoryID INT PRIMARY KEY,
+    categoryName VARCHAR(50)
+);
+
+-- =========================
+-- Table: tbl_product
+-- =========================
+CREATE TABLE tbl_product (
+    productID INT PRIMARY KEY,
+    userID INT,
+    productName VARCHAR(100),
+    description TEXT,
+    category VARCHAR(40),
+    size VARCHAR(20),
+    price DECIMAL(10,2),
+    stocks INT,
+    createdBy VARCHAR(50),
+    updatedBy VARCHAR(50),
+    FOREIGN KEY (userID) REFERENCES tbl_user(userID)
+);
+
+-- =========================
+-- Table: tbl_customizeSize
+-- =========================
+CREATE TABLE tbl_customizeSize (
+    customizeID INT PRIMARY KEY,
+    productID INT,
+    clothingType VARCHAR(40),
+    neck FLOAT,
+    shoulder FLOAT,
+    armhole FLOAT,
+    bicep FLOAT,
+    wrist FLOAT,
+    sleeveLength FLOAT,
+    chest FLOAT,
+    waist FLOAT,
+    hips FLOAT,
+    shirtLength FLOAT,
+    crotch FLOAT,
+    thigh FLOAT,
+    knee FLOAT,
+    legOpening FLOAT,
+    pantsLength FLOAT,
+    FOREIGN KEY (productID) REFERENCES tbl_product(productID)
+);
+
+-- =========================
+-- Table: tbl_cart
+-- =========================
+CREATE TABLE tbl_cart (
+    cartID INT PRIMARY KEY,
+    userID INT,
+    productID INT,
+    customizeID INT,
+    quantity INT,
+    price DECIMAL(10,2),
+    FOREIGN KEY (userID) REFERENCES tbl_user(userID),
+    FOREIGN KEY (productID) REFERENCES tbl_product(productID),
+    FOREIGN KEY (customizeID) REFERENCES tbl_customizeSize(customizeID)
+);
+
+-- =========================
+-- Table: tbl_order
+-- =========================
+CREATE TABLE tbl_order (
+    orderID INT PRIMARY KEY,
+    cartID INT,
+    totalPrice DECIMAL(10,2),
+    orderStatus VARCHAR(20),
+    updatedBy VARCHAR(50),
+    FOREIGN KEY (cartID) REFERENCES tbl_cart(cartID)
+);
+
+-- =========================
+-- Table: tbl_paymentmethod
+-- =========================
+CREATE TABLE tbl_paymentmethod (
+    paymentMethodID VARCHAR(50) PRIMARY KEY,
+    methodName VARCHAR(50)
+);
+
+-- =========================
+-- Table: tbl_payment
+-- =========================
+CREATE TABLE tbl_payment (
+    paymentID INT PRIMARY KEY,
+    orderID INT,
+    userID INT,
+    paymentMethodID VARCHAR(50),
+    paymentStatus VARCHAR(20),
+    dateCreated DATETIME,
+    FOREIGN KEY (orderID) REFERENCES tbl_order(orderID),
+    FOREIGN KEY (userID) REFERENCES tbl_user(userID),
+    FOREIGN KEY (paymentMethodID) REFERENCES tbl_paymentmethod(paymentMethodID)
+);
+
+-- =========================
+-- Table: tbl_appointment
+-- =========================
+CREATE TABLE tbl_appointment (
+    appointmentID INT PRIMARY KEY,
+    userID INT,
+    appointmentDate DATE,
+    service VARCHAR(50),
+    status VARCHAR(20),
+    updatedBy VARCHAR(50),
+    FOREIGN KEY (userID) REFERENCES tbl_user(userID)
+);
+
+-- =========================
+-- Table: tbl_chatlogs
+-- =========================
+CREATE TABLE tbl_chatlogs (
+    chatID INT PRIMARY KEY,
+    userID INT,
+    message TEXT,
+    timeSent DATETIME,
+    FOREIGN KEY (userID) REFERENCES tbl_user(userID)
+);

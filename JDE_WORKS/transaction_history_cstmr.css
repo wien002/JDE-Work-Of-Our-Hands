@@ -1,0 +1,230 @@
+/* Base typography and background */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f8f9fa;
+    color: #052b47;
+}
+
+/* Logo sizing inside navbar */
+.logo {
+    width: 56px;
+    height: auto;
+}
+
+/* Header copy styling */
+.history-wrapper {
+    background: linear-gradient(180deg, rgba(214, 178, 94, 0.08), transparent 55%);
+}
+
+.history-header {
+    text-align: center;
+}
+
+.history-title {
+    font-weight: 700;
+    font-size: clamp(1.9rem, 3vw, 2.6rem);
+    color: #052b47;
+}
+
+.history-subtitle {
+    color: rgba(5, 43, 71, 0.7);
+    font-size: 1rem;
+}
+
+/* Summary cards */
+.summary-card {
+    border-radius: 20px;
+    padding: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 8px 22px rgba(5, 43, 71, 0.08);
+}
+
+.summary-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.summary-label {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+}
+
+.summary-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* Filter panel */
+.filter-panel {
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 6px 20px rgba(5, 43, 71, 0.08);
+}
+
+.filter-panel .form-label {
+    color: rgba(5, 43, 71, 0.75);
+}
+
+.filter-panel .btn {
+    height: 44px;
+}
+
+/* Table styling */
+.table {
+    border-radius: 22px;
+    overflow: hidden;
+}
+
+.table thead th {
+    font-weight: 600;
+    color: rgba(5, 43, 71, 0.7);
+}
+
+.table tbody tr:hover {
+    background: rgba(214, 178, 94, 0.08);
+}
+
+.empty-state .empty-illustration {
+    max-width: 280px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 991.98px) {
+    .summary-card {
+        justify-content: space-between;
+    }
+
+    .filter-panel .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .history-header {
+        text-align: left;
+    }
+
+    .summary-card {
+        padding: 1.25rem;
+        gap: 0.75rem;
+    }
+
+    .summary-value {
+        font-size: 1.5rem;
+    }
+
+    .filter-panel {
+        padding: 1.25rem;
+    }
+
+    .empty-state .empty-illustration {
+        max-width: 220px;
+    }
+}
+
+/* Back button */
+.back-dashboard-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.55rem 1.15rem;
+}
+
+.back-dashboard-btn:hover,
+.back-dashboard-btn:focus {
+    background-color: rgba(214, 178, 94, 0.12);
+    border-color: rgba(214, 178, 94, 0.8);
+    color: #052b47;
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 6px 20px rgba(5, 43, 71, 0.08);
+}
+
+.navbar-brand .logo {
+    width: 56px;
+    height: auto;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    transition: color 0.2s ease;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus,
+.navbar-light .navbar-nav .nav-link.active {
+    color: #d6b25e;
+}
+
+.navbar-toggler {
+    border: none;
+    box-shadow: none;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.15rem rgba(214, 178, 94, 0.35);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.55rem 1.15rem;
+}
+
+.back-link:hover,
+.back-link:focus {
+    background-color: rgba(214, 178, 94, 0.12);
+    border-color: rgba(214, 178, 94, 0.8);
+    color: #052b47;
+}
+
+.btn-primary {
+    background-color: #d6b25e;
+    border-color: #d6b25e;
+    font-weight: 600;
+    border-radius: 12px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #c19b4a;
+    border-color: #c19b4a;
+}
+
+.btn-outline-secondary {
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+    background-color: rgba(214, 178, 94, 0.12);
+    border-color: rgba(214, 178, 94, 0.8);
+    color: #052b47;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-light .navbar-nav .nav-link {
+        padding: 0.5rem 0;
+    }
+
+    .navbar .navbar-nav {
+        gap: 0.25rem;
+    }
+}

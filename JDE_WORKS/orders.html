@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="admin_dashb.css">
+  <title>Orders - Admin</title>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <img src="assets/img/logo.png" alt="Logo">
+    </div>
+    <ul>
+      <li><a href="admin_dashboard.html">Dashboard</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li class="active"><a href="orders.html">Orders</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="users.html">Users</a></li>
+      <li><a href="payment_admin.html">Payments</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="topbar">
+      <a href="index.php" class="logout-btn">Logout</a>
+      <div class="divider"></div>
+      <div class="profile">
+        <span class="admin-text">Admin</span>
+      </div>
+    </div>
+
+    <h2>Orders</h2>
+
+    <div class="dashboard-boxes">
+      <!-- Orders Box -->
+      <div class="box">
+        <div class="box-header">
+          <h3>Order List</h3>
+          <!-- Search Section -->
+          <div class="search-section">
+            <input type="text" placeholder="Search">
+            <button class="btn search"><i class="bi bi-search"></i></button>
+          </div>
+        </div>
+        <table>
+          <tr>
+            <th>Order ID</th>
+            <th>Name</th>
+            <th>Order Date</th>
+            <th>Address</th>
+            <th>Order</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+          <tr>
+            <td>01</td>
+            <td>Juan Dela Cruz</td>
+            <td>2025-09-20</td>
+            <td>Caloocan City</td>
+            <td>
+              <button class="btn viewOrders">View Orders</button>
+            </td>
+            <td>2</td>
+            <td>Cancelled</td>
+            <td>
+              <button class="btn edit">Edit</button>
+              
+            </td>
+          </tr>
+          <tr>
+            <td>02</td>
+            <td>Maria Santos</td>
+            <td>2025-09-22</td>
+            <td>Quezon City</td>
+            <td>
+              <button class="btn viewOrders">View Orders</button>
+            </td>
+            <td>1</td>
+            <td>In Progress</td>
+            <td>
+              <button class="btn edit">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td>03</td>
+            <td>Carlos Reyes</td>
+            <td>2025-09-25</td>
+            <td>Manila</td>
+            <td>
+              <button class="btn viewOrders">View Orders</button>
+            </td>
+            <td>3</td>
+            <td>Completed</td>
+            <td>
+              <button class="btn edit">Edit</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Orders Modal -->
+  <div id="ordersModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="ordersModalTitle">
+      <div class="modal-header">
+        <h3 id="ordersModalTitle">Order Details</h3>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="order-meta">
+          <p><strong>Order ID:</strong> <span id="modalOrderId">-</span></p>
+          <p><strong>Customer:</strong> <span id="modalCustomerName">-</span></p>
+          <p><strong>Order Date:</strong> <span id="modalOrderDate">-</span></p>
+          <p><strong>Address:</strong> <span id="modalOrderAddress">-</span></p>
+          <p><strong>Status:</strong> <span id="modalOrderStatus">-</span></p>
+        </div>
+        <table class="modal-table">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Size</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="modalProductsBody">
+            <!-- dynamically filled -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4" class="total-label">Total</td>
+              <td id="modalOrderTotal" class="total-value">₱0.00</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn close-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      function select(el, root) {
+        return (root || document).querySelector(el);
+      }
+      function selectAll(el, root) {
+        return Array.prototype.slice.call((root || document).querySelectorAll(el));
+      }
+      function formatCurrency(value) {
+        return '₱' + Number(value).toFixed(2);
+      }
+
+      // Example data source; replace with real data from backend when available
+      var orderIdToProducts = {
+        '01': [
+          { productName: 'Uniform Polo', category: 'Clothing', size: 'M', price: 750.00, quantity: 3 },
+          { productName: 'Uniform Pants Male', category: 'Clothing', size: 'M', price: 750.00, quantity: 2 }
+        ],
+        '02': [
+          { productName: 'Uniform Blouse', category: 'Clothing', size: 'M', price: 750.00, quantity: 3 },
+          { productName: 'Uniform Pants Female', category: 'Clothing', size: 'M', price: 750.00, quantity: 2 }
+        ],
+        '03': [
+          { productName: 'Uniform Polo', category: 'Clothing', size: 'L', price: 850.00, quantity: 2 }
+        ]
+      };
+
+      function openModal() {
+        var overlay = select('#ordersModal');
+        if (!overlay) return;
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        var overlay = select('#ordersModal');
+        if (!overlay) return;
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      function populateAndShowModal(row) {
+        var cells = row.querySelectorAll('td');
+        var orderId = cells[0] ? cells[0].textContent.trim() : '';
+        var customerName = cells[1] ? cells[1].textContent.trim() : '';
+        var orderDate = cells[2] ? cells[2].textContent.trim() : '';
+        var address = cells[3] ? cells[3].textContent.trim() : '';
+        var status = cells[6] ? cells[6].textContent.trim() : '';
+
+        select('#modalOrderId').textContent = orderId;
+        select('#modalCustomerName').textContent = customerName;
+        select('#modalOrderDate').textContent = orderDate;
+        select('#modalOrderAddress').textContent = address;
+        select('#modalOrderStatus').textContent = status;
+
+        var products = orderIdToProducts[orderId] || [];
+        var tbody = select('#modalProductsBody');
+        tbody.innerHTML = '';
+
+        var total = 0;
+        products.forEach(function(item) {
+          var subtotal = item.price * item.quantity;
+          total += subtotal;
+          var tr = document.createElement('tr');
+          tr.innerHTML =
+            '<td>' + item.productName + '</td>' +
+            '<td>' + (item.category || '-') + '</td>' +
+            '<td>' + (item.size || '-') + '</td>' +
+            '<td>' + formatCurrency(item.price) + '</td>' +
+            '<td>' + item.quantity + '</td>' +
+            '<td>' + formatCurrency(subtotal) + '</td>';
+          tbody.appendChild(tr);
+        });
+
+        select('#modalOrderTotal').textContent = formatCurrency(total);
+        openModal();
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Open modal from any View Orders button
+        selectAll('.viewOrders').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            var row = e.currentTarget.closest('tr');
+            if (row) populateAndShowModal(row);
+          });
+        });
+
+        // Close actions
+        var overlay = select('#ordersModal');
+        var closeBtn = select('.modal-close', overlay);
+        var footerCloseBtn = select('.modal-footer .close-modal', overlay);
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (footerCloseBtn) footerCloseBtn.addEventListener('click', closeModal);
+
+        // Close when clicking outside the dialog window
+        if (overlay) {
+          overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closeModal();
+          });
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') closeModal();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

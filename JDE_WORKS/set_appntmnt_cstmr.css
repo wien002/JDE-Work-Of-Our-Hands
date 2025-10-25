@@ -1,0 +1,201 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f8f9fa;
+    color: #052b47;
+}
+
+.navbar {
+    box-shadow: 0 6px 20px rgba(5, 43, 71, 0.08);
+}
+
+.navbar-brand .logo {
+    width: 56px;
+    height: auto;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    font-weight: 600;
+    font-size: 1rem;
+    color: rgba(5, 43, 71, 0.82);
+    transition: color 0.2s ease;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+    color: #d6b25e;
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+    color: #d6b25e;
+}
+
+.navbar-toggler {
+    border: none;
+    box-shadow: none;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.15rem rgba(214, 178, 94, 0.35);
+}
+
+.appointment-page {
+    background: linear-gradient(180deg, rgba(214, 178, 94, 0.08), transparent 55%);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.55rem 1.15rem;
+}
+
+.back-link:hover,
+.back-link:focus {
+    background-color: rgba(214, 178, 94, 0.12);
+    border-color: rgba(214, 178, 94, 0.8);
+    color: #052b47;
+}
+
+.page-header {
+    max-width: 720px;
+}
+
+.page-title {
+    font-weight: 700;
+    font-size: clamp(1.9rem, 3vw, 2.6rem);
+    color: #052b47;
+}
+
+.page-subtitle {
+    color: rgba(5, 43, 71, 0.7);
+}
+
+.appointment-stat-cards .summary-card {
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    box-shadow: 0 8px 22px rgba(5, 43, 71, 0.08);
+}
+
+.summary-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 1.45rem;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.summary-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.2rem;
+}
+
+.summary-value {
+    font-size: 1.65rem;
+    font-weight: 700;
+}
+
+.appointment-form-card {
+    background: #ffffff;
+}
+
+.form-heading {
+    color: #052b47;
+    font-weight: 600;
+}
+
+.appointment-form-card .form-label {
+    color: rgba(5, 43, 71, 0.75);
+    font-size: 0.95rem;
+}
+
+.appointment-form-card .form-control,
+.appointment-form-card .form-select,
+.appointment-form-card textarea {
+    border-radius: 12px;
+    border-color: rgba(5, 43, 71, 0.12);
+    box-shadow: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.appointment-form-card .form-control:focus,
+.appointment-form-card .form-select:focus,
+.appointment-form-card textarea:focus {
+    border-color: #d6b25e;
+    box-shadow: 0 0 0 .2rem rgba(214, 178, 94, 0.25);
+}
+
+.appointment-form-card .btn {
+    border-radius: 12px;
+}
+
+.btn-primary {
+    background-color: #d6b25e;
+    border-color: #d6b25e;
+    font-weight: 600;
+    border-radius: 12px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #c19b4a;
+    border-color: #c19b4a;
+}
+
+.btn-outline-secondary {
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+    background-color: rgba(214, 178, 94, 0.12);
+    border-color: rgba(214, 178, 94, 0.8);
+    color: #052b47;
+}
+
+#formFeedback {
+    border-radius: 14px;
+}
+
+@media (max-width: 991.98px) {
+    .appointment-stat-cards .summary-card {
+        justify-content: space-between;
+    }
+
+    .navbar-light .navbar-nav .nav-link {
+        padding: 0.5rem 0;
+    }
+
+    .navbar .navbar-nav {
+        gap: 0.25rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .appointment-stat-cards .summary-card {
+        padding: 1.2rem;
+        gap: 0.75rem;
+    }
+
+    .summary-value {
+        font-size: 1.4rem;
+    }
+
+    .appointment-form-card .card-body {
+        padding: 1.5rem;
+    }
+
+    .appointment-form-card .btn {
+        width: 100%;
+    }
+}

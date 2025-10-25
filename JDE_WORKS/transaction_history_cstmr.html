@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta & Title -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+
+    <!-- Typography & Frameworks -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="transaction_history_cstmr.css">
+</head>
+<body>
+    <!-- Top navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="customer-dashbaord.html">
+                <img src="assets/img/logojd.png" alt="JDE Works of Our Hands Logo" class="logo" loading="lazy">
+                <span class="fw-semibold text-primary">Customer Portal</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#customerNav" aria-controls="customerNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="customerNav">
+                <ul class="navbar-nav align-items-lg-center gap-lg-3">
+                    <li class="nav-item"><a class="nav-link" href="set_appntmnt_cstmr.html">Set Appointment</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-semibold" aria-current="page" href="#">Transactions</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" aria-current="page" href="cart_items_cstmr.html">Cart</a></li>
+                    <li class="nav-item dropdown ms-lg-3">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="customerMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="customerMenu">
+                            <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content wrapper -->
+    <main class="history-wrapper py-4 py-lg-5">
+        <div class="container">
+            <a href="customer-dashbaord.html" class="btn btn-outline-secondary back-link mb-3">
+                <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
+            </a>
+            <!-- Page header -->
+            <header class="history-header mb-4">
+                <h1 class="history-title mb-2">Transaction History</h1>
+                <p class="history-subtitle mb-0">Review your recent orders, payments, and fulfilment status all in one place.</p>
+            </header>
+
+            <!-- Filters -->
+            <section class="filter-panel p-3 p-md-4 mb-4">
+                <div class="row gy-3 align-items-end">
+                    <div class="col-12 col-md-4">
+                        <label for="filterSearch" class="form-label fw-semibold">Search (order no. / reference)</label>
+                        <input type="text" class="form-control" id="filterSearch" placeholder="e.g. ORD-2024-1012">
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label for="filterStatus" class="form-label fw-semibold">Status</label>
+                        <select class="form-select" id="filterStatus">
+                            <option value="all" selected>All</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Refunded">Refunded</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label for="filterMethod" class="form-label fw-semibold">Payment Method</label>
+                        <select class="form-select" id="filterMethod">
+                            <option value="all" selected>All</option>
+                            <option value="Cash">Cash</option>
+                            <option value="GCash">GCash</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-2 d-flex gap-2">
+                        <button type="button" class="btn btn-primary w-100" id="applyFilters">
+                            <i class="bi bi-funnel me-1"></i>Apply
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" id="resetFilters">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Transactions table -->
+            <section class="table-responsive shadow-sm rounded-4 bg-white">
+                <table class="table table-hover align-middle mb-0" id="transactionsTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Order #</th>
+                            <th scope="col">Placed On</th>
+                            <th scope="col">Items</th>
+                            <th scope="col">Total (₱)</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Payment Method</th>
+                            <th scope="col" class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionBody">
+                        <!-- Rows injected by JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Empty state -->
+            <section class="empty-state text-center py-5 d-none" id="emptyState">
+                <img src="assets/img/empty-transactions.svg" alt="No transactions illustration" class="empty-illustration mb-4" loading="lazy">
+                <h3 class="mb-2">No transactions found</h3>
+                <p class="text-muted mb-0">Try widening your filters or place a new order to see it listed here.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // filepath: d:\Projects\2.0 JDE\JDE_WORKS\transaction_history_cstmr.html (inline script)
+        /* Seed data simulating records derived from the ERD */
+        const transactions = [
+            { orderNo: 'ORD-2024-1018', placedOn: '2024-04-16', items: 'Uniform Women Set (2 pcs)', total: 1890, status: 'Completed', method: 'GCash' },
+            { orderNo: 'ORD-2024-1017', placedOn: '2024-04-14', items: 'Uniform Men Top - Medium', total: 1450, status: 'Processing', method: 'Cash' },
+            { orderNo: 'ORD-2024-1016', placedOn: '2024-04-12', items: 'Uniform Women Combo', total: 1295, status: 'Pending', method: 'GCash' },
+            { orderNo: 'ORD-2024-1015', placedOn: '2024-04-09', items: 'Uniform Men Set (3 pcs)', total: 2150, status: 'Completed', method: 'Cash' },
+            { orderNo: 'ORD-2024-1014', placedOn: '2024-04-03', items: 'Uniform Women Top', total: 980, status: 'Refunded', method: 'GCash' },
+            { orderNo: 'ORD-2024-1013', placedOn: '2024-03-30', items: 'Uniform Men PE Set', total: 1625, status: 'Completed', method: 'Cash' },
+            { orderNo: 'ORD-2024-1012', placedOn: '2024-03-27', items: 'Uniform Men Bundle', total: 1870, status: 'Completed', method: 'GCash' },
+            { orderNo: 'ORD-2024-1011', placedOn: '2024-03-20', items: 'Uniform Men Accessories Set', total: 780, status: 'Pending', method: 'Cash' },
+            { orderNo: 'ORD-2024-1010', placedOn: '2024-03-18', items: 'Uniform Women Top', total: 1150, status: 'Cancelled', method: 'GCash' },
+            { orderNo: 'ORD-2024-1009', placedOn: '2024-03-14', items: 'Uniform Women PE Set', total: 2390, status: 'Completed', method: 'Cash' }
+        ];
+
+        /* DOM references */
+        const transactionBody = document.getElementById('transactionBody');
+        const emptyState = document.getElementById('emptyState');
+
+        const filterSearch = document.getElementById('filterSearch');
+        const filterStatus = document.getElementById('filterStatus');
+        const filterMethod = document.getElementById('filterMethod');
+        const applyFilters = document.getElementById('applyFilters');
+        const resetFilters = document.getElementById('resetFilters');
+
+        /* Utility to render table rows */
+        const renderRows = data => {
+            transactionBody.innerHTML = data.map(trx => `
+                <tr>
+                    <td class="fw-semibold" data-label="Order #">${trx.orderNo}</td>
+                    <td data-label="Placed On">${new Date(trx.placedOn).toLocaleDateString()}</td>
+                    <td data-label="Items">${trx.items}</td>
+                    <td data-label="Total">₱${trx.total.toLocaleString()}</td>
+                    <td data-label="Status"><span class="badge bg-${statusColor(trx.status)}">${trx.status}</span></td>
+                    <td data-label="Payment">${trx.method}</td>
+                    <td class="text-end" data-label="Actions">
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-secondary" type="button">
+                                <i class="bi bi-receipt"></i> View
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary" type="button">
+                                <i class="bi bi-download"></i> Invoice
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        };
+
+        /* Status badge color helper */
+        const statusColor = status => {
+            switch (status) {
+                case 'Pending': return 'warning text-dark';
+                case 'Processing': return 'info text-dark';
+                case 'Completed': return 'success';
+                case 'Refunded': return 'danger';
+                case 'Cancelled': return 'secondary';
+                default: return 'light text-dark';
+            }
+        };
+
+        /* Filter logic */
+        const filterData = () => {
+            const text = filterSearch.value.trim().toLowerCase();
+            const status = filterStatus.value;
+            const method = filterMethod.value;
+
+            const filtered = transactions.filter(trx => {
+                const matchesText = trx.orderNo.toLowerCase().includes(text) ||
+                                    trx.items.toLowerCase().includes(text);
+                const matchesStatus = status === 'all' || trx.status === status;
+                const matchesMethod = method === 'all' || trx.method === method;
+                return matchesText && matchesStatus && matchesMethod;
+            });
+
+            if (filtered.length) {
+                emptyState.classList.add('d-none');
+                renderRows(filtered);
+            } else {
+                transactionBody.innerHTML = '';
+                emptyState.classList.remove('d-none');
+            }
+        };
+
+        /* Reset filters */
+        const resetFilterControls = () => {
+            filterSearch.value = '';
+            filterStatus.value = 'all';
+            filterMethod.value = 'all';
+            emptyState.classList.add('d-none');
+            renderRows(transactions);
+        };
+
+        /* Event bindings */
+        applyFilters.addEventListener('click', filterData);
+        resetFilters.addEventListener('click', resetFilterControls);
+        filterSearch.addEventListener('keyup', event => {
+            if (event.key === 'Enter') filterData();
+        });
+
+        /* Initial render */
+        renderRows(transactions);
+    </script>
+</body>
+</html>

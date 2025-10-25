@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Cart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="cart_items_cstmr.css" />
+</head>
+<body>
+    <!-- Top navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="customer-dashbaord.html">
+                <img src="assets/img/logojd.png" alt="JDE Works of Our Hands Logo" class="logo" loading="lazy">
+                <span class="fw-semibold text-primary">Customer Portal</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#customerNav" aria-controls="customerNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="customerNav">
+                <ul class="navbar-nav align-items-lg-center gap-lg-3">
+                    <li class="nav-item"><a class="nav-link" href="set_appntmnt_cstmr.html">Set Appointment</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" aria-current="page" href="transaction_history_cstmr.html">Transactions</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-semibold" aria-current="page" href="cart_items_cstmr.html">Cart</a></li>
+                    <li class="nav-item dropdown ms-lg-3">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="customerMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="customerMenu">
+                            <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+  <main class="container py-5">
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+              <div>
+                <h1 class="h3 mb-1">Shopping Cart</h1>
+                <p class="text-muted small mb-0">Select the pieces you want to checkout or remove them from your bag.</p>
+              </div>
+              <a href="products.php" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-2"></i>Continue shopping
+              </a>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col" class="text-center" style="width: 48px;">
+                      <input type="checkbox" class="form-check-input" id="selectAll">
+                    </th>
+                    <th scope="col">Item</th>
+                    <th scope="col" style="width: 120px;">Size</th>
+                    <th scope="col" style="width: 120px;">Quantity</th>
+                    <th scope="col" class="text-end" style="width: 120px;">Unit price</th>
+                    <th scope="col" class="text-end" style="width: 120px;">Subtotal</th>
+                    <th scope="col" style="width: 100px;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="cartTableBody"></tbody>
+              </table>
+            </div>
+            <div id="emptyState" class="cart-empty text-center text-muted d-none">
+              <i class="bi bi-bag text-secondary display-5 d-block mb-3"></i>
+              <p class="mb-2">Your cart is empty.</p>
+              <a href="products.php" class="btn btn-primary btn-sm">Browse products</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card shadow-sm cart-summary">
+          <div class="card-body">
+            <h2 class="h5 mb-3">Cart summary</h2>
+            <ul class="stat-list list-unstyled small mb-3">
+              <li><span>Total items</span><strong id="totalItems">0</strong></li>
+              <li><span>Total pieces</span><strong id="totalQuantity">0</strong></li>
+              <li><span>Selected items</span><strong id="selectedCount">0</strong></li>
+              <li><span>Selected total</span><strong id="selectedTotal">₱0.00</strong></li>
+            </ul>
+            <div class="alert alert-info selection-notice small d-none" id="selectionNotice">
+              <span id="selectionText"></span>
+            </div>
+            <button type="button" class="btn btn-outline-danger w-100 mb-2" id="removeSelectedBtn" disabled>
+              <i class="bi bi-trash me-2"></i>Remove selected
+            </button>
+            <button type="button" class="btn btn-primary w-100" id="checkoutSelectedBtn" disabled>
+              Checkout selected<i class="bi bi-arrow-right ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="modal fade" id="customSizeModal" tabindex="-1" aria-labelledby="customSizeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="customSizeModalLabel">Custom measurements</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted small mb-3">Measurements captured at checkout.</p>
+          <div id="customMeasurementsBody" class="custom-measurements-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tableBody = document.getElementById('cartTableBody');
+      const emptyState = document.getElementById('emptyState');
+      const selectAll = document.getElementById('selectAll');
+      const removeSelectedBtn = document.getElementById('removeSelectedBtn');
+      const checkoutSelectedBtn = document.getElementById('checkoutSelectedBtn');
+      const totalItemsEl = document.getElementById('totalItems');
+      const totalQuantityEl = document.getElementById('totalQuantity');
+      const selectedCountEl = document.getElementById('selectedCount');
+      const selectedTotalEl = document.getElementById('selectedTotal');
+      const selectionNotice = document.getElementById('selectionNotice');
+      const selectionText = document.getElementById('selectionText');
+      const customSizeModalLabel = document.getElementById('customSizeModalLabel');
+      const customMeasurementsBody = document.getElementById('customMeasurementsBody');
+      const customSizeModal = new bootstrap.Modal(document.getElementById('customSizeModal'));
+
+      let cartItems = [
+        { id: crypto.randomUUID(), productID: 1, sku: 'UNIF-M-S', name: 'Uniform (Male)', size: 'S', quantity: 1, price: 850.00 },
+        { id: crypto.randomUUID(), productID: 2, sku: 'UNIF-M-L', name: 'Uniform (Male)', size: 'L', quantity: 2, price: 850.00 },
+        { id: crypto.randomUUID(), productID: 3, sku: 'UNIF-M-XXL', name: 'Uniform (Male)', size: 'XXL', quantity: 1, price: 920.00 },
+        { id: crypto.randomUUID(), productID: 4, sku: 'UNIF-F-M', name: 'Uniform (Female)', size: 'M', quantity: 1, price: 830.00 },
+        { id: crypto.randomUUID(), productID: 5, sku: 'UNIF-F-XL', name: 'Uniform (Female)', size: 'XL', quantity: 2, price: 880.00 },
+        {
+          id: crypto.randomUUID(),
+          productID: 6,
+          sku: 'CUST-MSUIT',
+          name: 'Custom Men Suit',
+          size: 'Custom',
+          quantity: 1,
+          price: 3500.00,
+          customize: {
+            clothingType: 'Suit',
+            chest: 38,
+            waist: 32,
+            hips: 40,
+            shoulder: 18,
+            sleeveLength: 24.5,
+            thigh: 22,
+            pantsLength: 41
+          }
+        },
+        {
+          id: crypto.randomUUID(),
+          productID: 7,
+          sku: 'CUST-DRESS-01',
+          name: 'Custom Dress',
+          size: 'Custom',
+          quantity: 1,
+          price: 2800.00,
+          customize: {
+            clothingType: 'Dress',
+            bust: 34,
+            waist: 28,
+            hips: 38,
+            shoulder: 15.5,
+            sleeveLength: 22,
+            shirtLength: 38
+          }
+        }
+      ];
+
+      selectAll.addEventListener('change', () => {
+        tableBody.querySelectorAll('.item-select').forEach(checkbox => {
+          checkbox.checked = selectAll.checked;
+        });
+        updateBulkState();
+      });
+
+      removeSelectedBtn.addEventListener('click', () => {
+        const ids = selectedIds();
+        if (!ids.length) return;
+        if (!confirm('Remove selected items from the cart?')) return;
+        cartItems = cartItems.filter(item => !ids.includes(item.id));
+        renderCart();
+      });
+
+      checkoutSelectedBtn.addEventListener('click', () => {
+        const ids = selectedIds();
+        if (!ids.length) return;
+        const summary = cartItems
+          .filter(item => ids.includes(item.id))
+          .map(item => `${item.name} (x${item.quantity})`)
+          .join(', ');
+        alert(`Checkout ready for: ${summary}`);
+      });
+
+      renderCart();
+
+      function renderCart() {
+        if (!cartItems.length) {
+          tableBody.innerHTML = '';
+          emptyState.classList.remove('d-none');
+          selectAll.checked = false;
+          selectAll.disabled = true;
+          updateBulkState();
+          return;
+        }
+
+        emptyState.classList.add('d-none');
+        selectAll.disabled = false;
+
+        tableBody.innerHTML = cartItems.map(item => `
+          <tr data-id="${item.id}">
+            <td class="text-center">
+              <input type="checkbox" class="form-check-input item-select" aria-label="Select ${item.name}">
+            </td>
+            <td>
+              <div class="fw-semibold">${item.name}</div>
+              <div class="text-muted small">SKU: ${item.sku}</div>
+            </td>
+            <td>
+              ${item.size === 'Custom'
+                ? `<button type="button" class="btn btn-sm btn-outline-primary view-custom"><i class="bi bi-rulers me-1"></i>Custom fit</button>`
+                : item.size}
+            </td>
+            <td>
+              <input type="number" class="form-control form-control-sm quantity-input" min="1" max="50" value="${item.quantity}" aria-label="Quantity for ${item.name}">
+            </td>
+            <td class="text-end">${formatCurrency(item.price)}</td>
+            <td class="text-end subtotal">${formatCurrency(item.price * item.quantity)}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-link text-danger remove-item">Remove</button>
+            </td>
+          </tr>
+        `).join('');
+
+        bindRowEvents();
+        updateBulkState();
+      }
+
+      function bindRowEvents() {
+        tableBody.querySelectorAll('.quantity-input').forEach(input => {
+          input.addEventListener('input', () => handleQuantityChange(input));
+        });
+
+        tableBody.querySelectorAll('.remove-item').forEach(button => {
+          button.addEventListener('click', () => handleRemove(button));
+        });
+
+        tableBody.querySelectorAll('.item-select').forEach(checkbox => {
+          checkbox.addEventListener('change', updateBulkState);
+        });
+
+        tableBody.querySelectorAll('.view-custom').forEach(button => {
+          button.addEventListener('click', () => showCustom(button));
+        });
+      }
+
+      function handleQuantityChange(input) {
+        const row = input.closest('tr');
+        const item = findItem(row);
+        if (!item) return;
+        const value = Math.min(50, Math.max(1, parseInt(input.value, 10) || 1));
+        item.quantity = value;
+        input.value = value;
+        row.querySelector('.subtotal').textContent = formatCurrency(item.price * item.quantity);
+        updateBulkState();
+      }
+
+      function handleRemove(button) {
+        const row = button.closest('tr');
+        if (!confirm('Remove this item from the cart?')) return;
+        cartItems = cartItems.filter(item => item.id !== row.dataset.id);
+        renderCart();
+      }
+
+      function showCustom(button) {
+        const item = findItem(button.closest('tr'));
+        if (!item || !item.customize) return;
+        customSizeModalLabel.textContent = `Custom measurements – ${item.name}`;
+        customMeasurementsBody.innerHTML = Object.entries(item.customize)
+          .map(([key, value]) => `
+            <div class="custom-measurement-card">
+              <span class="label">${toTitleCase(key)}</span>
+              <span class="value">${value}</span>
+            </div>
+          `).join('');
+        customSizeModal.show();
+      }
+
+      function updateBulkState() {
+        const ids = selectedIds();
+        const hasSelection = ids.length > 0;
+        const totalPieces = cartItems.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
+        const selectedTotal = cartItems
+          .filter(item => ids.includes(item.id))
+          .reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const selectedPieces = cartItems
+          .filter(item => ids.includes(item.id))
+          .reduce((sum, item) => sum + Number(item.quantity || 0), 0);
+
+        totalItemsEl.textContent = cartItems.length;
+        totalQuantityEl.textContent = totalPieces;
+        selectedCountEl.textContent = ids.length;
+        selectedTotalEl.textContent = formatCurrency(selectedTotal);
+
+        removeSelectedBtn.disabled = !hasSelection;
+        checkoutSelectedBtn.disabled = !hasSelection;
+
+        if (!cartItems.length) {
+          selectionNotice.classList.add('d-none');
+          selectionText.textContent = '';
+        } else if (!hasSelection) {
+          selectAll.checked = false;
+          selectAll.indeterminate = false;
+          selectionNotice.classList.add('d-none');
+          selectionText.textContent = '';
+        } else {
+          const checkboxes = tableBody.querySelectorAll('.item-select');
+          const checked = tableBody.querySelectorAll('.item-select:checked').length;
+          selectAll.checked = checked === checkboxes.length;
+          selectAll.indeterminate = checked > 0 && checked < checkboxes.length;
+          selectionNotice.classList.remove('d-none');
+          selectionText.textContent = `${ids.length} item(s) selected · ${selectedPieces} piece(s) · ${formatCurrency(selectedTotal)}`;
+        }
+      }
+
+      function selectedIds() {
+        return Array.from(tableBody.querySelectorAll('.item-select:checked')).map(checkbox =>
+          checkbox.closest('tr').dataset.id
+        );
+      }
+
+      function findItem(row) {
+        return cartItems.find(item => item.id === row.dataset.id);
+      }
+
+      function formatCurrency(amount) {
+        return new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(amount);
+      }
+
+      function toTitleCase(text) {
+        return text
+          .replace(/([A-Z])/g, ' $1')
+          .replace(/[_-]+/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .replace(/\b\w/g, char => char.toUpperCase());
+      }
+    });
+  </script>
+</body>
+</html>
+  </script>
+</body>
+</html>

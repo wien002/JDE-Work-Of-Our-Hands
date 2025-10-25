@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Form</title>
+  <link rel="stylesheet" href="css/signin.css">
+</head>
+<body>
+  <div class="background"></div>
+  <div class="form-container">
+    <div class="logo">
+      <a href="index.php"><img src="assets/img/LOGO.png" alt="Logo"></a>
+    </div>
+    <form action="" method="POST">
+      <div class="input-group">
+        <span class="icon">👤</span>
+        <input type="text" name="txt_givenName" placeholder="First Name" required>
+      </div>
+      <div class="input-group">
+        <span class="icon">👤</span>
+        <input type="text" name="txt_middleName" placeholder="Middle Name">
+      </div>
+      <div class="input-group">
+        <span class="icon">👤</span>
+        <input type="text" name="txt_surname" placeholder="Last Name" required>
+      </div>
+      
+      <div class="input-group">
+        <span class="icon">🚻</span>
+        <select id="gender" name="txt_gender" required>
+          <option value="" disabled selected>Select Gender</option>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+      </div>
+      
+      <div class="input-group">
+        <span class="icon">📅</span>
+        <input type="date" id="birthday" name="txt_birthday" required>
+      </div>
+      
+      <div class="input-group">
+        <span class="icon">📧</span>
+        <input type="email" name="txt_email" placeholder="Email" required>
+      </div>
+      
+      <div class="input-group">
+        <span class="icon">🧑‍💻</span>
+        <input type="text" name="txt_uname" placeholder="Username" required>
+      </div>
+      
+      <div class="input-group">
+        <span class="icon">📞</span>
+        <input type="text" name="txt_phone" placeholder="Phone Number (11 digits)" maxlength="11" required>
+      </div>
+      
+      <div class="input-group">
+        <span class="icon">🔒</span>
+        <input type="password" name="txt_pw" placeholder="Password" required>
+      </div>
+      <div class="input-group">
+        <span class="icon">🔒</span>
+        <input type="password" name="txt_confirm_pw" placeholder="Confirm Password" required>
+      </div>
+      
+      <button type="submit" class="signup-btn">SIGN UP</button>
+      <div class="divider">or</div>
+      <div class="login-link">
+        Have an account? <a href="login.php">LOGIN</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
+
+<?php
+session_start();
+
+include("db_connection.php"); 
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get form data (Keys now match the 'name' attributes in the HTML above)
+    $firstName = trim($_POST['txt_givenName']);
+    $middleName = trim($_POST['txt_middleName']);
+    $lastName = trim($_POST['txt_surname']);
+    
+    $birthday = trim($_POST['txt_birthday']);
+    $gender = trim($_POST['txt_gender']);
+    
+    $email = trim($_POST['txt_email']);
+    $username = trim($_POST['txt_uname']);
+    $password = $_POST['txt_pw']; // Do not trim passwords
+    $confirmPassword = $_POST['txt_confirm_pw']; // Do not trim passwords
+    $phoneNumber = trim($_POST['txt_phone']);
+
+    // --- 1. Validate Required Input ---
+    if (empty($firstName) || empty($lastName) || empty($email) || empty($username) || empty($password) || empty($confirmPassword) || empty($phoneNumber) || empty($birthday) || empty($gender)) {
+        echo "<script>alert('Please fill in all required fields.'); window.history.back();</script>";
+        exit();
+    }
+
+    // --- 2. Validate Phone Number Length ---
+    if (!preg_match('/^\d{11}$/', $phoneNumber)) {
+        echo "<script>alert('Phone number must be exactly 11 digits.'); window.history.back();</script>";
+        exit();
+    }
+    
+    // --- 3. Validate Gender Format ---
+    // The select box uses 'M' and 'F', so no complex substr logic is needed, but we ensure it's uppercase for CHAR(1).
+    $gender = strtoupper($gender);
+    if (!in_array($gender, ['M', 'F'])) { 
+        // This validation is mostly redundant if the select box is not modified by the user
+        echo "<script>alert('Invalid gender selected.'); window.history.back();</script>";
+        exit();
+    }
+
+    // --- 4. Check if Passwords Match ---
+    if ($password !== $confirmPassword) {
+        echo "<script>alert('Passwords do not match.'); window.history.back();</script>";
+        exit();
+    }
+
+    // --- 5. Check if Username or Email Already Exists ---
+    $checkUserQuery = "SELECT userID FROM tbl_user WHERE LOWER(userName) = LOWER(?) OR LOWER(email) = LOWER(?)";
+    $stmt = $conn->prepare($checkUserQuery);
+    $stmt->bind_param("ss", $username, $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<script>alert('Username or Email already taken. Please choose another one.'); window.history.back();</script>";
+        exit();
+    }
+    $stmt->close();
+
+    // --- 6. Hash the Password ---
+    // !!! CRITICAL SECURITY WARNING: Your DB column for password is VARCHAR(50) and MUST be VARCHAR(255) for this to work securely.
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    
+    // Prepare values for additional columns
+    $userTypeID = 3; // Assuming '3' is the default customer role
+    $createdBy = $username;
+    $updatedBy = $username;
+    
+    // --- 7. Insert New User into Database ---
+    $insertQuery = "INSERT INTO tbl_user (userName, password, firstName, middleName, lastName, birthday, gender, email, phoneNumber, userTypeID, createdBy, updatedBy) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($insertQuery);
+    
+    // s s s s s s s s s i s s (11 strings, 1 integer)
+    $stmt->bind_param("sssssssssiss", 
+        $username, $hashedPassword, $firstName, $middleName, $lastName, 
+        $birthday, $gender, $email, $phoneNumber, $userTypeID, 
+        $createdBy, $updatedBy
+    );
+
+    if ($stmt->execute()) {
+        $_SESSION['user_id'] = $stmt->insert_id;
+        $_SESSION['username'] = $username;
+        $_SESSION['role'] = 'customer'; 
+
+        echo "<script>alert('Account successfully created!'); window.location.href = 'login.php';</script>";
+    } else {
+        echo "<script>alert('Error creating account. Please try again later. Error: " . $stmt->error . "'); window.history.back();</script>";
+    }
+
+    $stmt->close();
+    $conn->close();
+
+} else {
+    // If not a POST request, do nothing (keep the HTML displayed)
+}
+?>

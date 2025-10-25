@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="admin_dashb.css">
+  <title>Payments - Admin</title>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <img src="assets/img/logo.png" alt="Logo">
+    </div>
+    <ul>
+      <li><a href="admin_dashboard.html">Dashboard</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="orders.html">Orders</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="users.html">Users</a></li>
+      <li class="active"><a href="payment_admin.html">Payments</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="topbar">
+      <a href="index.php" class="logout-btn">Logout</a>
+      <div class="divider"></div>
+      <div class="profile">
+        <span class="admin-text">Admin</span>
+      </div>
+    </div>
+
+    <h2>Payments</h2>
+
+    <div class="dashboard-boxes">
+      <!-- Payments Box -->
+      <div class="box">
+        <div class="box-header">
+          <h3>Payment List</h3>
+
+          <!-- Search Section (similar to users.html and appointments.html) -->
+          <div class="search-section">
+            <input type="text" placeholder="Search Payment ID, Order ID, or Customer...">
+            <button class="btn search"><i class="bi bi-search"></i></button>
+          </div>
+        </div>
+        <table>
+          <tr>
+            <th>Payment ID</th>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Payment Method</th>
+            <th>Status</th>
+            <th>Date Created</th>
+            <th>Actions</th>
+          </tr>
+          <tr>
+            <td>01</td>
+            <td>01</td>
+            <td>Juan Dela Cruz</td>
+            <td>GCash</td>
+            <td>Completed</td>
+            <td>2025-09-20 10:30:00</td>
+            <td>
+              <button class="btn edit">Edit</button>
+              <button class="btn view">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>02</td>
+            <td>02</td>
+            <td>Maria Santos</td>
+            <td>Cash</td>
+            <td>Pending</td>
+            <td>2025-09-22 14:15:00</td>
+            <td>
+              <button class="btn edit">Edit</button>
+              <button class="btn view">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>03</td>
+            <td>03</td>
+            <td>Carlos Reyes</td>
+            <td>GCash</td>
+            <td>Failed</td>
+            <td>2025-09-25 09:45:00</td>
+            <td>
+              <button class="btn edit">Edit</button>
+              <button class="btn view">View</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Modal (similar to orders.html modal for details) -->
+  <div id="paymentModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="paymentModalTitle">
+      <div class="modal-header">
+        <h3 id="paymentModalTitle">Payment Details</h3>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="order-meta">
+          <p><strong>Payment ID:</strong> <span id="modalPaymentId">-</span></p>
+          <p><strong>Order ID:</strong> <span id="modalOrderId">-</span></p>
+          <p><strong>Customer:</strong> <span id="modalCustomerName">-</span></p>
+          <p><strong>Payment Method:</strong> <span id="modalPaymentMethod">-</span></p>
+          <p><strong>Status:</strong> <span id="modalPaymentStatus">-</span></p>
+          <p><strong>Date Created:</strong> <span id="modalDateCreated">-</span></p>
+        </div>
+        <p><strong>Associated Order Total:</strong> <span id="modalOrderTotal">₱0.00</span></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn close-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      function select(el, root) {
+        return (root || document).querySelector(el);
+      }
+      function selectAll(el, root) {
+        return Array.prototype.slice.call((root || document).querySelectorAll(el));
+      }
+
+      // Example data source for modal (updated to only GCash and Cash; replace with real backend data)
+      var paymentIdToDetails = {
+        '01': { orderId: '01', customerName: 'Juan Dela Cruz', paymentMethod: 'GCash', status: 'Completed', dateCreated: '2025-09-20 10:30:00', orderTotal: 2250.00 },
+        '02': { orderId: '02', customerName: 'Maria Santos', paymentMethod: 'Cash', status: 'Pending', dateCreated: '2025-09-22 14:15:00', orderTotal: 1500.00 },
+        '03': { orderId: '03', customerName: 'Carlos Reyes', paymentMethod: 'GCash', status: 'Failed', dateCreated: '2025-09-25 09:45:00', orderTotal: 1700.00 }
+      };
+
+      function openModal() {
+        var overlay = select('#paymentModal');
+        if (!overlay) return;
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        var overlay = select('#paymentModal');
+        if (!overlay) return;
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      function populateAndShowModal(row) {
+        var cells = row.querySelectorAll('td');
+        var paymentId = cells[0] ? cells[0].textContent.trim() : '';
+        var details = paymentIdToDetails[paymentId] || {};
+
+        select('#modalPaymentId').textContent = paymentId;
+        select('#modalOrderId').textContent = details.orderId || '-';
+        select('#modalCustomerName').textContent = details.customerName || '-';
+        select('#modalPaymentMethod').textContent = details.paymentMethod || '-';
+        select('#modalPaymentStatus').textContent = details.status || '-';
+        select('#modalDateCreated').textContent = details.dateCreated || '-';
+        select('#modalOrderTotal').textContent = '₱' + Number(details.orderTotal || 0).toFixed(2);
+
+        openModal();
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Open modal from any View button
+        selectAll('.view').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            var row = e.currentTarget.closest('tr');
+            if (row) populateAndShowModal(row);
+          });
+        });
+
+        // Close actions
+        var overlay = select('#paymentModal');
+        var closeBtn = select('.modal-close', overlay);
+        var footerCloseBtn = select('.modal-footer .close-modal', overlay);
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (footerCloseBtn) footerCloseBtn.addEventListener('click', closeModal);
+
+        // Close when clicking outside the dialog window
+        if (overlay) {
+          overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closeModal();
+          });
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') closeModal();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

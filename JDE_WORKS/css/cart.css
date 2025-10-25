@@ -1,0 +1,12 @@
+.navbar-nav .nav-link[href="cart_items_cstmr.html"] {
+  font-weight: 600;
+  color: var(--bs-primary) !important;
+}
+
+.navbar-nav .nav-link {
+  transition: color .2s ease, font-weight .2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--bs-primary);
+}

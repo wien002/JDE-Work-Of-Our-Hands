@@ -1,0 +1,127 @@
+.admin-header {
+    background: linear-gradient(135deg, var(--chat-admin-bg), #1a4a6b);
+    color: white;
+    padding: 15px 20px;
+    border-bottom: 2px solid var(--chat-border);
+}
+
+.customer-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.customer-item {
+    padding: 12px;
+    border-bottom: 1px solid var(--chat-border);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.customer-item:hover { 
+    background-color: var(--chat-bg); 
+}
+
+.customer-item.active { 
+    background-color: var(--chat-user-bg); color: white; 
+}
+
+.customer-name { 
+    font-weight: 600; 
+    margin-bottom: 0; 
+}
+
+.customer-last-message { 
+    font-size: 12px; 
+    opacity: 0.8; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: 
+    ellipsis; 
+}
+
+.customer-status { 
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+    font-size: 12px; 
+}
+
+.status-dot { 
+    width: 10px; 
+    height: 10px; 
+    border-radius: 50%; 
+    flex: 0 0 10px; 
+}
+
+.status-online { 
+    background: #16a34a; 
+}
+
+.status-offline { 
+    background: #ef4444; 
+}
+
+.admin-actions { 
+    display: flex; 
+    gap: 10px; 
+    margin-bottom: 15px; 
+}
+
+.admin-btn { 
+    padding: 8px 16px; 
+    border: none; 
+    border-radius: 20px; 
+    cursor: pointer; 
+    font-size: 12px; 
+    font-weight: 600; 
+    transition: all 0.2s ease; 
+}
+
+.btn-broadcast { 
+    background-color: var(--chat-user-bg); 
+    color: white; 
+}
+
+.btn-broadcast:hover { 
+    background-color: var(--chat-admin-bg); 
+}
+
+.btn-clear { 
+    background-color: #dc3545; 
+    color: white; 
+}
+
+.btn-clear:hover { 
+    background-color: #c82333; 
+}
+
+.message-admin { 
+    background: linear-gradient(135deg, var(--chat-admin-bg), #1a4a6b) !important; color: white !important; 
+}
+
+.quick-responses { 
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 8px; 
+    margin-bottom: 15px; 
+}
+
+.quick-response { 
+    padding: 6px 12px; 
+    background-color: var(--chat-bg); 
+    border: 1px solid var(--chat-border); 
+    border-radius: 15px; 
+    cursor: pointer; 
+    font-size: 12px; 
+    transition: all 0.2s ease; 
+}
+
+.quick-response:hover { 
+    background-color: var(--chat-user-bg); 
+    color: white; 
+}
+
+

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product Details</title>
+  <!-- Google Fonts for a more elegant look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="ordering.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/product.css">
+</head>
+<body>
+   <!-- Navigation -->
+    <nav class="navbar navbar-expand-md bg-white sticky-top shadow-sm">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-brand">
+                <a href="index.html"><img src="assets/img/logojd.png" alt="JDE Works of Our Hands Logo" class="logo" loading="lazy"></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.php#Services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="products.php">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php#About">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php#Contact">Contact us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="chat.php">Live Chat</a></li>
+                </ul>
+            </div>
+
+            <div class="navbar-right button-container">
+                <a href="signin.html" class="signup">Sign Up</a>
+                <a href="login.html" class="login">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back Button -->
+    <div class="back-button-container">
+        <a href="product.html" class="back-button" title="Back to Products">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m15 18-6-6 6-6"/>
+            </svg>
+        </a>
+    </div>
+
+  <!-- Title -->
+  <div class="page-title">
+    <h2>Product Details</h2>
+    <p>Explore and customize your perfect uniform blouse</p>
+  </div>
+
+  <!-- Product Box -->
+  <div class="product-box">
+    <!-- Product Image -->
+    <div class="product-image">
+      <img src="unifrom.jpeg" alt="Product Image" id="productImage" />
+    </div>
+
+    <!-- Product Details -->
+    <div class="product-details">
+      <!-- Product Name -->
+      <h1 id="productName">Uniform Blouse</h1>
+      
+      <!-- Category -->
+      <div class="info-item">
+        <label>Category:</label>
+        <span id="productCategory">School Uniforms</span>
+      </div>
+      
+      <!-- Description -->
+      <div class="info-item">
+        <label>Description:</label>
+        <p id="productDescription">High-quality school uniform blouse made from comfortable cotton blend fabric. Perfect for daily school wear with excellent durability and comfort.</p>
+      </div>
+      
+      <!-- Price -->
+      <div class="price-section">
+        <span id="productPrice" class="price">₱450.00</span>
+      </div>
+      
+      <!-- Available Stock -->
+      <div class="stock-section">
+        <label>Available Stock:</label>
+        <span id="productStock" class="stock">25 pieces</span>
+      </div>
+
+      <!-- Size Selection -->
+      <div class="size-selection">
+        <label>Size:</label>
+        <div class="sizes" id="sizeButtonsContainer">
+          <button type="button" data-size="S" onclick="selectSize('S')">S</button>
+          <button type="button" data-size="M" onclick="selectSize('M')" class="active">M</button>
+          <button type="button" data-size="L" onclick="selectSize('L')">L</button>
+          <button type="button" data-size="XL" onclick="selectSize('XL')">XL</button>
+        </div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="quantity-section">
+        <label for="quantity"><i class="bi bi-arrow-up-down"></i> Quantity:</label>
+        <div class="quantity-controls">
+          <button type="button" onclick="decreaseQuantity()">-</button>
+          <input type="number" id="quantity" value="1" min="1" max="999" readonly />
+          <button type="button" onclick="increaseQuantity()">+</button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button type="button" class="btn customize" onclick="openCustomization()"><i class="bi bi-scissors"></i> Custom Size</button>
+        <button type="button" class="btn add-to-cart" onclick="addToCart()"><i class="bi bi-cart-plus"></i> Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+<!-- Customization Popup -->
+<div id="customizationModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeCustomization()" aria-label="Close">&times;</span>
+    <h3>Enter Your Custom Measurements</h3>
+
+    <label for="neck">Neck (cm)</label>
+    <div class="input-box">
+      <input type="number" id="neck" name="neck" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="shoulder">Shoulder (cm)</label>
+    <div class="input-box">
+      <input type="number" id="shoulder" name="shoulder" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="armhole">Armhole (cm)</label>
+    <div class="input-box">
+      <input type="number" id="armhole" name="armhole" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="bicep">Bicep (cm)</label>
+    <div class="input-box">
+      <input type="number" id="bicep" name="bicep" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="wrist">Wrist (cm)</label>
+    <div class="input-box">
+      <input type="number" id="wrist" name="wrist" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="sleeveLength">Sleeve Length (cm)</label>
+    <div class="input-box">
+      <input type="number" id="sleeveLength" name="sleeveLength" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="chest">Chest (cm)</label>
+    <div class="input-box">
+      <input type="number" id="chest" name="chest" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="waist">Waist (cm)</label>
+    <div class="input-box">
+      <input type="number" id="waist" name="waist" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="hips">Hips (cm)</label>
+    <div class="input-box">
+      <input type="number" id="hips" name="hips" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="shirtLength">Shirt Length (cm)</label>
+    <div class="input-box">
+      <input type="number" id="shirtLength" name="shirtLength" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="crotch">Crotch (cm)</label>
+    <div class="input-box">
+      <input type="number" id="crotch" name="crotch" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="thigh">Thigh (cm)</label>
+    <div class="input-box">
+      <input type="number" id="thigh" name="thigh" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="knee">Knee (cm)</label>
+    <div class="input-box">
+      <input type="number" id="knee" name="knee" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="legOpening">Leg Opening (cm)</label>
+    <div class="input-box">
+      <input type="number" id="legOpening" name="legOpening" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="pantsLength">Pants Length (cm)</label>
+    <div class="input-box">
+      <input type="number" id="pantsLength" name="pantsLength" placeholder="Enter measurement" min="0" step="0.1" />
+    </div>
+
+    <label for="upload">Upload Sample Image</label>
+    <div class="input-box">
+      <input type="file" id="upload" name="upload" accept="image/*" />
+    </div>
+
+    <label for="notes">Additional Notes</label>
+    <textarea id="notes" name="notes" placeholder="Any special instructions..."></textarea>
+
+    <div class="form-buttons">
+      <button class="btn customize" type="button" onclick="bookAppointmentWithMeasurements()">Book Appointment</button>
+      <button class="btn add-to-cart" type="button" onclick="addToCartWithCustomization()">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+  <!-- JavaScript -->
+  <script>
+    // --- Hardcoded Product Data ---
+    let productData = {
+      id: 1,
+      productID: 1,
+      productName: "Uniform Blouse",
+      category: "School Uniforms",
+      description: "High-quality school uniform blouse made from comfortable cotton blend fabric. Perfect for daily school wear with excellent durability and comfort.",
+      image: "unifrom.jpeg",
+      sizes: {
+        S: { price: 400.00, stock: 15 },
+        M: { price: 450.00, stock: 25 },
+        L: { price: 450.00, stock: 20 },
+        XL: { price: 500.00, stock: 10 }
+      }
+    };
+
+    // Mock logged-in user data
+    const loggedInUser = {
+      userID: 1,
+      firstName: "Juan",
+      lastName: "Dela Cruz",
+      middleName: "Santos",
+      email: "juan.delacruz@email.com",
+      phoneNumber: "9123456789",
+      fullName: "Juan Santos Dela Cruz",
+      address: "123 Main Street, Barangay San Jose, Quezon City, Metro Manila 1100"
+    };
+
+    let selectedSize = 'M';
+    let quantity = 1;
+
+    // Initialize page with product data
+    async function initializeProduct() {
+      document.getElementById('productName').textContent = productData.productName;
+      document.getElementById('productCategory').textContent = productData.category;
+      document.getElementById('productDescription').textContent = productData.description;
+      document.getElementById('productImage').src = productData.image;
+
+      // Dynamically create size buttons
+      const sizeButtonsContainer = document.getElementById('sizeButtonsContainer');
+      sizeButtonsContainer.innerHTML = '';
+      const sizesArray = Object.keys(productData.sizes);
+      if (sizesArray.length > 0) {
+        sizesArray.forEach(sizeKey => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.dataset.size = sizeKey;
+          button.textContent = sizeKey;
+          button.onclick = () => selectSize(sizeKey);
+          sizeButtonsContainer.appendChild(button);
+        });
+
+        selectedSize = sizesArray.includes('M') ? 'M' : sizesArray[0];
+        document.querySelector(`[data-size="${selectedSize}"]`).classList.add('active');
+        updateSizeInfo(selectedSize);
+      } else {
+        document.getElementById('productPrice').textContent = 'N/A';
+        document.getElementById('productStock').textContent = 'No sizes available';
+        document.getElementById('quantity').disabled = true;
+        document.querySelector('.action-buttons .btn.add-to-cart').disabled = true;
+        alert("No sizes found for this product.");
+      }
+    }
+
+    // Handle size selection
+    function selectSize(size) {
+      selectedSize = size;
+      
+      const sizeButtons = document.querySelectorAll('.sizes button');
+      sizeButtons.forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`[data-size="${size}"]`).classList.add('active');
+      
+      updateSizeInfo(size);
+      
+      quantity = 1;
+      document.getElementById('quantity').value = quantity;
+    }
+
+    // Update price and stock based on size
+    function updateSizeInfo(size) {
+      if (!productData || !productData.sizes[size]) {
+        console.error("Size data not found for:", size);
+        return;
+      }
+      const sizeData = productData.sizes[size];
+      document.getElementById('productPrice').textContent = `₱${sizeData.price.toFixed(2)}`;
+      document.getElementById('productStock').textContent = `${sizeData.stock} pieces`;
+      
+      const stockElement = document.getElementById('productStock');
+      stockElement.className = 'stock'; // Reset classes
+      if (sizeData.stock <= 5) {
+        stockElement.classList.add('low');
+      } else if (sizeData.stock <= 15) {
+        stockElement.classList.add('medium');
+      } else {
+        stockElement.classList.add('high');
+      }
+      
+      document.getElementById('quantity').max = Math.min(999, sizeData.stock);
+      if (quantity > sizeData.stock) {
+        quantity = sizeData.stock > 0 ? 1 : 0;
+        document.getElementById('quantity').value = quantity;
+      }
+      if (sizeData.stock === 0) {
+        document.getElementById('quantity').value = 0;
+        document.getElementById('quantity').disabled = true;
+        document.querySelector('.action-buttons .btn.add-to-cart').disabled = true;
+        alert("This size is currently out of stock.");
+      } else {
+        document.getElementById('quantity').disabled = false;
+        document.querySelector('.action-buttons .btn.add-to-cart').disabled = false;
+      }
+    }
+
+    // Quantity controls
+    function increaseQuantity() {
+      const maxStock = productData.sizes[selectedSize].stock;
+      const maxAllowed = Math.min(999, maxStock);
+      
+      if (quantity < maxAllowed) {
+        quantity++;
+        document.getElementById('quantity').value = quantity;
+      } else if (quantity >= maxStock) {
+        alert(`Sorry, only ${maxStock} pieces available for size ${selectedSize}`);
+      } else {
+        alert('Maximum quantity limit is 999 pieces');
+      }
+    }
+
+    function decreaseQuantity() {
+      if (quantity > 1) {
+        quantity--;
+        document.getElementById('quantity').value = quantity;
+      }
+    }
+
+    // Regular add to cart function (without customization)
+    async function addToCart() {
+      if (!productData || !selectedSize) {
+        alert("Product data not loaded or size not selected.");
+        return;
+      }
+
+      const sizeData = productData.sizes[selectedSize];
+      
+      if (quantity > sizeData.stock) {
+        alert(`Sorry, only ${sizeData.stock} pieces available for size ${selectedSize}`);
+        return;
+      }
+
+      if (quantity > 999) {
+        alert('Maximum quantity limit is 999 pieces');
+        return;
+      }
+
+      alert(`Added ${quantity} x ${productData.productName} (Size: ${selectedSize}) to cart!`);
+      
+      quantity = 1;
+      document.getElementById('quantity').value = quantity;
+    }
+
+    // Modal controls
+    function openCustomization() {
+      document.getElementById('customizationModal').style.display = 'flex';
+    }
+
+    function closeCustomization() {
+      document.getElementById('customizationModal').style.display = 'none';
+      clearCustomizationForm();
+    }
+
+    // Function to book appointment with measurements
+    function bookAppointmentWithMeasurements() {
+      const customMeasurements = {
+        neck: document.getElementById('neck').value || null,
+        shoulder: document.getElementById('shoulder').value || null,
+        armhole: document.getElementById('armhole').value || null,
+        bicep: document.getElementById('bicep').value || null,
+        wrist: document.getElementById('wrist').value || null,
+        sleeveLength: document.getElementById('sleeveLength').value || null,
+        chest: document.getElementById('chest').value || null,
+        waist: document.getElementById('waist').value || null,
+        hips: document.getElementById('hips').value || null,
+        shirtLength: document.getElementById('shirtLength').value || null,
+        crotch: document.getElementById('crotch').value || null,
+        thigh: document.getElementById('thigh').value || null,
+        knee: document.getElementById('knee').value || null,
+        legOpening: document.getElementById('legOpening').value || null,
+        pantsLength: document.getElementById('pantsLength').value || null,
+        additionalNotes: document.getElementById('notes').value || null
+      };
+
+      const bookingData = {
+        user: loggedInUser,
+        product: {
+          name: productData.productName,
+          category: productData.category,
+          selectedSize: selectedSize,
+          quantity: quantity,
+          price: productData.sizes[selectedSize].price
+        },
+        measurements: customMeasurements
+      };
+
+      sessionStorage.setItem('bookingData', JSON.stringify(bookingData));
+      window.location.href = 'booking.html';
+          }
+
+    // Add to cart with customization
+    function addToCartWithCustomization() {
+      const sizeData = productData.sizes[selectedSize];
+      
+      if (quantity > sizeData.stock) {
+        alert(`Sorry, only ${sizeData.stock} pieces available for size ${selectedSize}`);
+        return;
+      }
+
+      if (quantity > 999) {
+        alert('Maximum quantity limit is 999 pieces');
+        return;
+      }
+
+      alert(`Added ${quantity} x ${productData.productName} with custom measurements to cart!`);
+      
+      closeCustomization();
+      
+      quantity = 1;
+      document.getElementById('quantity').value = quantity;
+    }
+
+    // Clear customization form
+    function clearCustomizationForm() {
+      document.getElementById('neck').value = '';
+      document.getElementById('shoulder').value = '';
+      document.getElementById('armhole').value = '';
+      document.getElementById('bicep').value = '';
+      document.getElementById('wrist').value = '';
+      document.getElementById('sleeveLength').value = '';
+      document.getElementById('chest').value = '';
+      document.getElementById('waist').value = '';
+      document.getElementById('hips').value = '';
+      document.getElementById('shirtLength').value = '';
+      document.getElementById('crotch').value = '';
+      document.getElementById('thigh').value = '';
+      document.getElementById('knee').value = '';
+      document.getElementById('legOpening').value = '';
+      document.getElementById('pantsLength').value = '';
+      document.getElementById('upload').value = '';
+      document.getElementById('notes').value = '';
+    }
+
+    // Close modal on outside click or ESC
+    window.addEventListener('click', (event) => {
+      const modal = document.getElementById('customizationModal');
+      if (event.target === modal) modal.style.display = 'none';
+    });
+
+    window.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('customizationModal');
+      if (e.key === 'Escape' && modal.style.display === 'flex') {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Initialize the page when it loads
+    document.addEventListener('DOMContentLoaded', initializeProduct);
+  </script>
+</body>
+</html>

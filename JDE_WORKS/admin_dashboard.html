@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin_dashb.css">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <img src="assets/img/logo.png" alt="Logo">
+    </div>
+    <ul>
+      <li class="active"><a href="admin_dashboard.html">Dashboard</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="orders.html">Orders</a></li>
+      <li><a href="appointments.html">Appointments</a></li>
+      <li><a href="users.html">Users</a></li>
+      <li><a href="payment_admin.html">Payments</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="topbar">
+      <a href="index.php" class="logout-btn">Logout</a>
+      <div class="divider"></div>
+      <div class="profile">
+        <span class="admin-text">Admin</span>
+      </div>
+    </div>
+
+    <h2>Dashboard</h2>
+
+    <div class="dashboard-boxes">
+      <!-- Appointments Box -->
+      <div class="box">
+        <h3>Appointments</h3>
+        <table>
+          <tr><th>Appointment ID</th><th>Type</th><th>Date</th></tr>
+          <tr><td>02</td><td>Fitting</td><td>2025-10-08</td></tr>
+          <tr><td>03</td><td>Fitting</td><td>2025-10-09</td></tr>
+        </table>
+      </div>
+
+      <!-- Orders in Processing -->
+      <div class="box">
+        <h3>Order in Processing</h3>
+        <table>
+          <tr><th>Order ID</th><th>Customer Name</th><th>Date</th></tr>
+          <tr><td>02</td><td>Maria Santos</td><td>2025-09-22</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

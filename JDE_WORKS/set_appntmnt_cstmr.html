@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Set Appointment</title>
+    <!-- Fonts & frameworks -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="set_appntmnt_cstmr.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="customer-dashbaord.html">
+                <img src="assets/img/logojd.png" alt="JDE Works of Our Hands Logo" class="logo" loading="lazy">
+                <span class="fw-semibold text-primary">Customer Portal</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#customerNav" aria-controls="customerNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="customerNav">
+                <ul class="navbar-nav align-items-lg-center gap-lg-3">
+                    <li class="nav-item"><a class="nav-link active fw-semibold" aria-current="page" href="#">Set Appointment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="transaction_history_cstmr.html">Transactions</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" aria-current="page" href="cart_items_cstmr.html">Cart</a></li>
+                    <li class="nav-item dropdown ms-lg-3">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="customerMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="customerMenu">
+                            <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Appointment form -->
+    <main class="appointment-page py-4 py-lg-5">
+        <div class="container">
+            <a href="customer-dashbaord.html" class="btn btn-outline-secondary back-link mb-3">
+                <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
+            </a>
+
+            <header class="page-header text-center text-lg-start mb-4">
+                <h1 class="page-title mb-2">Set an Appointment</h1>
+                <p class="page-subtitle mb-0">Provide the details below so we can prepare the perfect fitting or consultation for you.</p>
+            </header>
+
+            <!-- Summary cards -->
+            <section class="row g-3 g-md-4 mb-4 appointment-stat-cards">
+                <!-- ...existing code... -->
+            </section>
+
+            <!-- Appointment form -->
+            <section class="card appointment-form-card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4 p-lg-5">
+                    <h2 class="form-heading h5 mb-3">Appointment Details</h2>
+                    <form id="appointmentForm" novalidate>
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label for="customerName" class="form-label">Customer Name<span class="text-danger">*</span></label>
+                                <input type="text" id="customerName" class="form-control" readonly>
+                                <div class="form-text">Auto-filled from your profile (temporary placeholder until DB connection).</div>
+                                <div class="invalid-feedback">Please enter your name.</div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="contactNumber" class="form-label">Contact Number<span class="text-danger">*</span></label>
+                                <input type="tel" id="contactNumber" class="form-control" readonly>
+                                <div class="form-text">Auto-filled from your profile (temporary placeholder until DB connection).</div>
+                                <div class="invalid-feedback">Please enter a valid PH mobile number.</div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="appointmentDate" class="form-label">Appointment Date<span class="text-danger">*</span></label>
+                                <input type="date" id="appointmentDate" class="form-control" required>
+                                <div class="invalid-feedback">Pick an appointment date.</div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="appointmentTime" class="form-label">Appointment Time<span class="text-danger">*</span></label>
+                                <input type="time" id="appointmentTime" class="form-control" required>
+                                <div class="invalid-feedback">Select a time slot.</div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="serviceType" class="form-label">Service Type<span class="text-danger">*</span></label>
+                                <select id="serviceType" class="form-select" required>
+                                    <option value="" disabled selected>Select a service</option>
+                                    <option value="Uniform Measurement & Fitting">Uniform Measurement &amp; Fitting</option>
+                                    <option value="Design Consultation">Design Consultation</option>
+                                    <option value="Final Fitting">Final Fitting</option>
+                                    <option value="Client Pickup">Client Pickup</option>
+                                    <option value="Virtual Consultation">Virtual Consultation</option>
+                                </select>
+                                <div class="invalid-feedback">Select the service you need.</div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="paymentPreference" class="form-label">Payment Preference</label>
+                                <select id="paymentPreference" class="form-select">
+                                    <option value="To be determined" selected>To be determined</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="GCash">GCash</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="appointmentNotes" class="form-label">Additional Notes</label>
+                                <textarea id="appointmentNotes" class="form-control" rows="3" placeholder="Share measurements, special instructions, or context for the visit."></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex flex-column flex-md-row gap-2">
+                            <button type="submit" class="btn btn-primary w-100 w-md-auto">
+                                <i class="bi bi-send me-1"></i>Submit Appointment Request
+                            </button>
+                            <button type="reset" class="btn btn-outline-secondary w-100 w-md-auto">
+                                Clear Form
+                            </button>
+                        </div>
+                        <div id="formFeedback" class="alert alert-success mt-4 d-none" role="alert">
+                            Appointment request submitted successfully. A coordinator will reach out to confirm your schedule.
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // filepath: d:\Projects\2.0 JDE\JDE_WORKS\set_appntmnt_cstmr.html (inline script)
+        const appointmentForm = document.getElementById('appointmentForm');
+        const appointmentDate = document.getElementById('appointmentDate');
+        const customerName = document.getElementById('customerName');
+        const contactNumber = document.getElementById('contactNumber');
+        const formFeedback = document.getElementById('formFeedback');
+
+        const minimumDate = new Date();
+        minimumDate.setDate(minimumDate.getDate() + 1);
+        appointmentDate.min = minimumDate.toISOString().split('T')[0];
+
+        const validateName = value => /^[A-Za-z\s'.-]{2,}$/.test(value.trim());
+        const validateContact = value => /^09\d{9}$/.test(value.trim());
+
+        const showInvalid = (input, condition) => {
+            if (!condition) {
+                input.classList.add('is-invalid');
+                input.classList.remove('is-valid');
+                return false;
+            }
+            input.classList.remove('is-invalid');
+            input.classList.add('is-valid');
+            return true;
+        };
+
+        customerName.addEventListener('input', () => showInvalid(customerName, validateName(customerName.value)));
+        contactNumber.addEventListener('input', () => showInvalid(contactNumber, validateContact(contactNumber.value)));
+
+        const TEMP_CUSTOMER = {
+            name: 'Jane Dela Cruz',
+            contact: '09171234567'
+        };
+        customerName.value = TEMP_CUSTOMER.name;
+        contactNumber.value = TEMP_CUSTOMER.contact;
+        customerName.dataset.placeholder = 'Fetched from DB';
+        contactNumber.dataset.placeholder = 'Fetched from DB';
+
+        const runStaticValidation = () => {
+            showInvalid(customerName, validateName(customerName.value));
+            showInvalid(contactNumber, validateContact(contactNumber.value));
+        };
+
+        appointmentForm.addEventListener('submit', event => {
+            event.preventDefault();
+            runStaticValidation();
+
+            if (!appointmentForm.checkValidity()) {
+                appointmentForm.classList.add('was-validated');
+                return;
+            }
+
+            appointmentForm.reset();
+            appointmentForm.classList.remove('was-validated');
+            document.querySelectorAll('.is-valid').forEach(el => el.classList.remove('is-valid'));
+            customerName.value = TEMP_CUSTOMER.name;
+            contactNumber.value = TEMP_CUSTOMER.contact;
+            runStaticValidation();
+
+            formFeedback.classList.remove('d-none');
+            formFeedback.classList.add('show');
+            setTimeout(() => {
+                formFeedback.classList.add('fade');
+                setTimeout(() => {
+                    formFeedback.classList.add('d-none');
+                    formFeedback.classList.remove('fade', 'show');
+                }, 500);
+            }, 3500);
+        });
+    </script>
+</body>
+</html>
